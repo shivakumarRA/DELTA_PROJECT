@@ -27,15 +27,15 @@ const reviews=require("./router/reviews.js");
 const userRouter=require("./router/users.js");
 //const flash = require("flash");
 
- const mongoDB='mongodb://127.0.0.1:27017/wanderlust';
-//const dbURL=process.env.ATLASTDB_URL;
+ //const mongoDB='mongodb://127.0.0.1:27017/wanderlust';
+const dbURL=process.env.ATLASTDB_URL;
 
 main().then(()=>{
     console.log("successfull conneted")
 }).catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect(mongoDB);
+  await mongoose.connect(dbURL);
 }
 
 
@@ -48,21 +48,21 @@ app.use(express.urlencoded({extended:true}));
 app.engine('ejs', engine);
 app.use(express.static(path.join(__dirname,"public")));
 
-// const store=MongoStore.create({
-//   mongoUrl:dbURL,
-//   crypto:{
-//     secret:process.env.SECRET,
-//   },
-//   touchAfter:24*3600,
+const store=MongoStore.create({
+  mongoUrl:dbURL,
+  crypto:{
+    secret:process.env.SECRET,
+  },
+  touchAfter:24*3600,
 
-// })
+})
 
-// store.on("error",()=>{
-//   console.log("Error in mongo session store",err);
-// })
+store.on("error",()=>{
+  console.log("Error in mongo session store",err);
+})
 
 const sessionOptions={
-  // store:store,
+   store:store,
   secret:process.env.SECRET,
   resave:false,
   saveUninitialized:true,
