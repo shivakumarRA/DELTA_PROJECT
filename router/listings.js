@@ -17,10 +17,14 @@ router.route("/")
 //     res.send(req.file);
 // })
 
-
-
 //new 
 router.get("/new",isLoggin,listingController.renderNewForm)
+
+//Rooms
+router.route("/Catogary/:catogary")
+.get(wrapAsync(listingController.listingRooms));
+
+
 
 router.route("/:id")
 .get(wrapAsync(listingController.showListing))
@@ -31,6 +35,8 @@ router.route("/:id")
 
 //edit
 router.get("/:id/edit",isLoggin,wrapAsync(listingController.editListing));
+
+
 
 
 //index

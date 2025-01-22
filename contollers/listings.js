@@ -35,6 +35,10 @@ module.exports.index=async (req,res)=>{
  
  // console.log(url,filename);
   let listing=req.body.listing;
+  // console.log(req.body.listing.location);
+  // console.log(req.body.listing.Category);
+  // console.log(listing);
+  // res.send("done");
   const newlisting=new Listing(listing);
   newlisting.owner=req.user._id;
   newlisting.image={url,filename};
@@ -105,4 +109,25 @@ module.exports.showListing=async(req,res)=>{
    // console.log(data)
    req.flash("success","Listing Deleted!");
    res.redirect("/listings");
+  }
+
+
+  module.exports.listingRooms=async(req,res)=>{
+    let Category=req.params;
+    console.log(Category.catogary);
+
+    if("Trending"==Category.catogary){
+      const alistings = await Listing.find({}).sort({ _id: -1 });
+
+      res.render("listings/index.ejs", { alistings });
+   
+    }else{
+ // console.log(Category.catogary);
+    let alistings=await Listing.find({ Category: Category.catogary }).populate({path:"reviews",populate:{
+      path:"author"
+    }}).populate("owner");
+    console.log(alistings)
+    res.render("listings/index.ejs",{alistings});
+    //res.send("done");
+  }
   }

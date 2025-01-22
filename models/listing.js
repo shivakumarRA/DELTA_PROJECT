@@ -2,6 +2,7 @@ const mongoose=require("mongoose");
 const review = require("./review");
 const Schema=mongoose.Schema;//eassy to write
 const Review=require("./review.js");
+const { types } = require("joi");
 
 
 
@@ -18,6 +19,10 @@ const listingSchema=new Schema({
     price:Number,
     location:String,
     country:String,
+    Category:{
+      type:String,
+      enum:["Rooms","Iconic","Mountains","Castles","Amazing","Camping","Forms","Arctic"]
+    },
     reviews:[{
         type:Schema.Types.ObjectId,
         ref:"Review",
@@ -37,7 +42,8 @@ const listingSchema=new Schema({
         type: [Number],
         required: true
       }
-    }
+    },
+ 
 });
 
 listingSchema.post("findOneAndDelete",async(listing)=>{

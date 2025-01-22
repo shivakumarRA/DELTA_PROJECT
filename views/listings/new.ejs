@@ -50,7 +50,36 @@
 
       <div class="mb-3">
         <label for="image" class="form-label">Upload Image</label>
-        <input type="file" name="listing[image]" class="form-control" />
+        <input
+          type="file"
+          name="listing[image]"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Add Image!</div>
+        <div class="valid-feedback">looks good!</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="Category" class="form-label">Category</label>
+
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          name="listing[Category]"
+          required
+        >
+          <option value="" selected disabled>Open this select menu</option>
+          <option value="Rooms">Rooms</option>
+          <option value="Iconic">Iconic Cities</option>
+          <option value="Mountains">Mountains</option>
+          <option value="Castles">Castles</option>
+          <option value="Amazing">Amazing Pools</option>
+          <option value="Camping">Camping</option>
+          <option value="Forms">Forms</option>
+          <option value="Arctic">Arctic</option>
+        </select>
+        <div class="invalid-feedback">Please select a category!</div>
         <div class="valid-feedback">Looks good!</div>
       </div>
 
